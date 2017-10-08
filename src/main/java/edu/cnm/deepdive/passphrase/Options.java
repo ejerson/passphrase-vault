@@ -7,6 +7,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.MissingOptionException;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.UnrecognizedOptionException;
 
 public class Options {
 
@@ -15,6 +16,16 @@ public class Options {
       org.apache.commons.cli.Options options = buildOptions();
       CommandLineParser parser = new DefaultParser();
       org.apache.commons.cli.CommandLine cmdLine = parser.parse(options, args);
+
+
+      if(cmdLine.hasOption("l")) {
+        System.out.println("length");
+      }
+
+      if(cmdLine.hasOption("d")) {
+        System.out.println("delimiter");
+      }
+
       if(cmdLine.hasOption("?")) {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("java " + Options.class.getName(), options);
@@ -23,11 +34,14 @@ public class Options {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("java " + Options.class.getName(), options);
       }
+    } catch (UnrecognizedOptionException e) {
+      System.out.println("Retry: \nPlease type \"-?\" or \"--help\" for command list!");
     } catch (MissingOptionException e) {
-      System.out.println("Derp");
+      System.out.println("Please type \"-?\" or \"--help\" for command list!");
     } catch (ParseException e) {
       e.printStackTrace();
     }
+
   }
 
   // defines my options
@@ -103,6 +117,10 @@ public class Options {
     options.addOption(helpOpt);
     return options;
   }
+
+
+  //TODO |  -l 8 -d ".aa" -r  | What if this happens?
+  // -x -d | how to only ask user for delimiter when the option passphrase is activated
 
 }
 
