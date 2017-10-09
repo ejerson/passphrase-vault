@@ -15,25 +15,17 @@ import org.apache.commons.cli.UnrecognizedOptionException;
 public class Options {
 
   public static void main(String[] args) {
-
-//    java.util.Map<String, Object> map = new java.util.HashMap<>();
-//
-//    map.put("r", null);
-//    System.out.println(map.get("r"));
-//
-
     try {
       org.apache.commons.cli.Options options = buildOptions();
       CommandLineParser parser = new DefaultParser();
       org.apache.commons.cli.CommandLine cmdLine = parser.parse(options, args);
 
-
       if(cmdLine.hasOption("l")) {
-        System.out.println("length");
+        System.out.println(Constants.LENGTH_OPTION);
       }
 
       if(cmdLine.hasOption("d")) {
-        System.out.println("delimiter");
+        System.out.println(Constants.DELIMITER_OPTION);
       }
 
       if(cmdLine.hasOption("?")) {
@@ -51,81 +43,79 @@ public class Options {
     } catch (ParseException e) {
       e.printStackTrace();
     }
-
   }
 
   // defines my options
-  // TODO - Make this non-static, invoked from a constructor
-  // TODO - fix constant names
   private static org.apache.commons.cli.Options buildOptions() {
     //returns a builder      //this list of options can be in any order I want
     ResourceBundle bundle = UsageStrings.getBundle();
-
     Option repeatOpt =         Option.builder("r").hasArg(false)
-                                                  .required(false)
-                                                  .longOpt(Constants.NO_REPEAT_OPTION)
-                                                  .desc(bundle.getString(Constants.EXCLUDES_REPEAT))
-                                                  .build();
+                                                       .required(false)
+                                                       .longOpt(Constants.NO_REPEAT_OPTION)
+                                                       .desc(bundle.getString(Constants.EXCLUDES_REPEAT))
+                                                       .build();
     Option uppercaseOpt =      Option.builder("u").hasArg(false)
-                                                  .required(false)
-                                                  .longOpt("no-upper")
-                                                  .desc(Constants.EXCLUDES_UPPERCASE)
-                                                  .build();
+                                                       .required(false)
+                                                       .longOpt(Constants.NO_UPPER_OPTION)
+                                                       .desc(bundle.getString(Constants.EXCLUDES_UPPERCASE))
+                                                       .build();
     Option lowercaseOpt =      Option.builder("w").hasArg(false)
-                                                  .required(false)
-                                                  .longOpt("no-lower")
-                                                  .desc(Constants.EXCLUDES_LOWERCASE)
-                                                  .build();
+                                                       .required(false)
+                                                       .longOpt(Constants.NO_LOWER_OPTION)
+                                                       .desc(bundle.getString(Constants.EXCLUDES_LOWERCASE))
+                                                       .build();
     Option digitsOpt =         Option.builder("g").hasArg(false)
-                                                  .required(false)
-                                                  .longOpt("no")
-                                                  .desc("excludes digits(numbers)")
-                                                  .build();
+                                                       .required(false)
+                                                       .longOpt(Constants.NO_DIGITS_OPTION)
+                                                       .desc(bundle.getString(Constants.EXCLUDES_DIGITS))
+                                                       .build();
     Option ambiguousOpt =      Option.builder("a").hasArg(false)
-                                                  .required(false)
-                                                  .longOpt(Constants.EXCLUDES_AMBIGUOUS)
-                                                  .desc("exclude 0, O, o, L, l")
-                                                  .build();
-    Option orderOpt =             Option.builder().hasArg(false)
-                                                  .longOpt(Constants.EXCLUDES_ORDER)
-                                                  .desc("excludes consecutive characters")
-                                                  .build();
+                                                       .required(false)
+                                                       .longOpt(
+                                                           Constants.NO_AMBIGUOUS_CHARACTERS_OPTION)
+                                                       .desc(bundle.getString(Constants.EXCLUDES_AMBIGUOUS))
+                                                       .build();
+    Option orderOpt =          Option.builder()        .hasArg(false)
+                                                       .required(false)
+                                                       .longOpt(Constants.EXCLUDES_ORDER_OPTION)
+                                                       .desc(bundle.getString(Constants.EXCLUDES_ORDER))
+                                                       .build();
     Option symbolsOpt =        Option.builder("s").hasArg(true)
-                                                  .required(false)
-                                                  .optionalArg(true)
-                                                  .numberOfArgs(1)
-                                                  .longOpt(Constants.EXCLUDES_SYMBOLS)
-                                                  .desc("excludes specified symbols")
-                                                  .type(String.class)
-                                                  .build();
+                                                       .required(false)
+                                                       .optionalArg(true)
+                                                       .numberOfArgs(1)
+                                                       .longOpt(Constants.EXCLUDES_SYMBOLS_OPTION)
+                                                       .desc(bundle.getString(Constants.EXCLUDES_SYMBOLS))
+                                                       .type(String.class)
+                                                       .build();
     Option lengthOpt =         Option.builder("l").argName("value") // set its arg name
-                                                  .optionalArg(false) // mark the builder object as an optional option
-                                                  .hasArg(true)
-                                                  .numberOfArgs(1)
-                                                  .longOpt(Constants.SPECIFY_LENGTH)
-                                                  .desc("requested length of generated artifact (default = %d)")
-                                                  .required(false)
-                                                  .type(Number.class)
-                                                  .build(); // returns an option
-    Option delimiterOpt =      Option.builder("d").argName("(*, -, _, |)") // set its arg name
-                                                  .optionalArg(false) // mark the builder object as an optional option
-                                                  .hasArg(true)
-                                                  .numberOfArgs(1)
-                                                  .longOpt(Constants.SPECIFY_DELIMITER)
-                                                  .desc("space between words(*, -, _, |) (default = space")
-                                                  .required(false)
-                                                  .type(Character.class)
-                                                  .build();
-    Option helpOpt =           Option.builder("?").longOpt(Constants.HELP_MSG)
-                                                  .required(false)
-                                                  .hasArg(false)
-                                                  .desc("Displays options and description")
-                                                  .build();
+                                                       .optionalArg(false) // mark the builder object as an optional option
+                                                       .hasArg(true)
+                                                       .numberOfArgs(1)
+                                                       .longOpt(Constants.LENGTH_OPTION)
+                                                       .desc(bundle.getString(Constants.SPECIFY_LENGTH))
+                                                       .required()
+                                                       .type(Number.class)
+                                                       .build(); // returns an option
+    Option delimiterOpt =      Option.builder("d").argName("value") // set its arg name
+                                                       .optionalArg(false) // mark the builder object as an optional option
+                                                       .hasArg(true)
+                                                       .numberOfArgs(1)
+                                                       .longOpt(Constants.DELIMITER_OPTION)
+                                                       .desc(bundle.getString(Constants.SPECIFY_DELIMITER))
+                                                       .required(false)
+                                                       .type(Character.class)
+                                                       .build();
+    Option helpOpt =           Option.builder("?").longOpt(Constants.HELP_OPTION)
+                                                       .required(false)
+                                                       .hasArg(false)
+                                                       .desc(Constants.HELP_MSG)
+                                                       .build();
     Option modeOpt =           Option.builder("x").hasArg(false)
-                                                  .required(false)
-                                                  .longOpt(Constants.MODE_SWITCH)
-                                                  .desc("generate password vs. passphrase default")
-                                                  .build();
+                                                       .required(false)
+                                                       .longOpt(Constants.PASSWORD_MODE_OPTION)
+                                                       .desc(bundle.getString(Constants.MODE_SWITCH))
+                                                       .build();
 
     org.apache.commons.cli.Options options = new org.apache.commons.cli.Options();
     options.addOption(repeatOpt);
@@ -142,9 +132,4 @@ public class Options {
     return options;
   }
 
-
-  //TODO |  -l 8 -d ".aa" -r  | What if this happens?
-  // -x -d | how to only ask user for delimiter when the option passphrase is activated
-
 }
-
