@@ -40,7 +40,7 @@ public class Constants {
     public static final String SPECIFY_LENGTH_ARGS = "specifyLengthArgs";
     public static final String SPECIFY_DELEMITER_ARGS = "specifyDelimiterArgs";
 
-    // long option names
+    // Long option names
     public static final String NO_REPEAT_OPTION = "no-repeat";
     public static final String NO_UPPER_OPTION = "no-upper";
     public static final String NO_LOWER_OPTION = "no-lower";
@@ -52,4 +52,11 @@ public class Constants {
     public static final String DELIMITER_OPTION = "delimiter";
     public static final String HELP_OPTION = "help";
     public static final String PASSWORD_MODE_OPTION = "password-mode";
+
+    // Default values
+    public static final boolean DEFAULT_REPEAT_ALLOWED = true;
+    public static final char DEFAULT_DELIMITER = ' ';
+    public static final int DEFAULT_PASSPHRASE_LENGTH = 6;
+    public static final int DEFAULT_PASSWORD_LENGTH = 12;
+    public static final boolean DEFAULT_ORDER_CONFIGURATION = false;
 }

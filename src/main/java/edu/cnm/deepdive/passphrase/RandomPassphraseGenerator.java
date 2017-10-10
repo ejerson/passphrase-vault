@@ -1,14 +1,17 @@
 package edu.cnm.deepdive.passphrase;
 
+import edu.cnm.deepdive.passphrase.util.Constants;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 public class RandomPassphraseGenerator extends RandomArtifactGenerator {
-  private char delimiter;
 
- // uses an array to store items, which we then check for repeated words.
+  private char delimiter = Constants.DEFAULT_DELIMITER;
+  public RandomPassphraseGenerator (){
+    setLength(Constants.DEFAULT_PASSPHRASE_LENGTH);
+  }
+  // uses an array to store items, which we then check for repeated words.
 
   // String builder
   public String generate() {
