@@ -12,7 +12,7 @@ public abstract class RandomArtifactGenerator {
   protected RandomArtifactGenerator() {
   }
 
-  public abstract String generate();
+  public abstract void generate();
 
   public int getLength() {
     return length;
@@ -22,13 +22,13 @@ public abstract class RandomArtifactGenerator {
     this.length = length;
   }
 
-  public boolean isRepeatedAllowed(boolean repeatedAllowed) {
+  public boolean isRepeatedAllowed() {
     return this.repeatedAllowed;
   }
 
   public void setRepeatedAllowed(boolean repeatedAllowed) {
-      this.repeatedAllowed = repeatedAllowed;
-    }
+    this.repeatedAllowed = repeatedAllowed;
+  }
 
   public Random getRng() {
     return rng;
