@@ -13,8 +13,11 @@ public class RandomPassphraseGenerator extends RandomArtifactGenerator {
   }
   // uses an array to store items, which we then check for repeated words.
 
-  // String builder
-  public void generate() {
+  /**
+   *
+   * @return
+   */
+  public String generate() {
     List<String> words = new ArrayList<>();
 
 

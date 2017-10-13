@@ -19,13 +19,26 @@ import org.apache.commons.cli.UnrecognizedOptionException;
 import edu.cnm.deepdive.passphrase.util.Constants;
 import edu.cnm.deepdive.passphrase.util.UsageStrings;
 
+/**
+ * Provides a framework of Options for the CommandLine to use a reference.
+ * Contains Parse Options, buildOptions, Map Implementations, Options Validation.
+ *
+ */
 public class Options {
 
+  /** Locates a given option */
   public final Map<String, Object> map;
 //  public Map<String, Object> getMap() {
 //    return map;
 //  }
 
+  /**
+   *
+   * @param args return response to exceptions
+   * @throws ParseException throws and catches ParseExeption
+   * @throws HelpRequestedException throws and catches HelpRequestedException
+   * @throws IllegalArgumentException throws and catches IllegalArgumentException
+   */
   public Options(String[] args)
       throws ParseException, HelpRequestedException, IllegalArgumentException {
     ResourceBundle resourceBundle = UsageStrings.getBundle();
@@ -34,8 +47,6 @@ public class Options {
       options = buildOptions();
       map = parse(args, options);
       validate();
-
-
     } catch (UnrecognizedOptionException e) {
       System.out.println(resourceBundle.getString(Constants.UNRECOGNIZED_OPTION));
       throw e;
@@ -59,6 +70,11 @@ public class Options {
     }
   }
 
+  /**
+   * Checks individual user entries for validity, and throws errors and warnings.
+   *
+   * @throws IllegalArgumentException throws an exception if an illegal argument is used
+   */
   private void validate()
       throws IllegalArgumentException {
     ResourceBundle resourceBundle = UsageStrings.getBundle();
@@ -86,21 +102,31 @@ public class Options {
       if(map.containsKey(Constants.EXCLUDES_ORDER)) {
         System.out.println(Constants.MODE_SELECT_ERROR);
       }
-      int length = ((Number) map.get(Constants.LENGTH_OPTION)).intValue();
-      if ((length < Constants.MINIMUM_PASSPHRASE_LENGTH) || (length > Constants.MAXIMUM_PASSPHRASE_LENGTH)) { // use a constant instead of "6"
-        throw new IllegalArgumentException(String.format(Constants.LENGTH_ERROR));
-
+      if (map.containsKey(Constants.LENGTH_OPTION)) {
+        int length = ((Number) map.get(Constants.LENGTH_OPTION)).intValue();
+        if ((length < Constants.MINIMUM_PASSPHRASE_LENGTH) || (length > Constants.MAXIMUM_PASSPHRASE_LENGTH)) { // use a constant instead of "6"
+          throw new IllegalArgumentException(String.format(Constants.LENGTH_ERROR));
+        }
       }
     }
   }
 
+  /**
+   * Enables CommandLine to parse through options provided by the buildOptions.
+   *
+   * @param args String[]
+   * @param options Options object
+   * @return map
+   * @throws ParseException stopping the program from running unavailable option
+   * @throws HelpRequestedException informs the program that it needs to print help option
+   */
   private Map parse(String[] args, org.apache.commons.cli.Options options)
       throws ParseException, HelpRequestedException {
     CommandLineParser parser = new DefaultParser();
     org.apache.commons.cli.CommandLine cmdLine = parser.parse(options, args);
     ResourceBundle resourceBundle = UsageStrings.getBundle();
 
-    if(cmdLine.hasOption(resourceBundle.getString(Constants.HELP_MSG))) {
+    if(cmdLine.hasOption(Constants.HELP_OPTION)) {
       throw new HelpRequestedException();
     }
     Map<String, Object> map = new HashMap<>(); // map is a field(lookup table)
@@ -115,76 +141,79 @@ public class Options {
     return map;
   }
 
-  // defines my options
+  /**
+   *  Defines my options and associates them with Constants class. Returns
+   *  populated options object that is used by the Map, Validation, and Parse to CommandLine
+   */
   private org.apache.commons.cli.Options buildOptions() {
     //returns a builder      //this list of options can be in any order I want
     ResourceBundle bundle = UsageStrings.getBundle();
-    Option repeatOpt =         Option.builder("r").hasArg(false)
-        .required(false)
-        .longOpt(Constants.NO_REPEAT_OPTION)
-        .desc(bundle.getString(Constants.EXCLUDES_REPEAT))
-        .build();
-    Option uppercaseOpt =       Option.builder("u").hasArg(false)
-        .required(false)
-        .longOpt(Constants.NO_UPPER_OPTION)
-        .desc(bundle.getString(Constants.EXCLUDES_UPPERCASE))
-        .build();
-    Option lowercaseOpt =       Option.builder("w").hasArg(false)
-        .required(false)
-        .longOpt(Constants.NO_LOWER_OPTION)
-        .desc(bundle.getString(Constants.EXCLUDES_LOWERCASE))
-        .build();
-    Option digitsOpt =          Option.builder("g").hasArg(false)
-        .required(false)
-        .longOpt(Constants.NO_DIGITS_OPTION)
-        .desc(bundle.getString(Constants.EXCLUDES_DIGITS))
-        .build();
-    Option ambiguousOpt =       Option.builder("a").hasArg(false)
-        .required(false)
-        .longOpt(Constants.NO_AMBIGUOUS_CHARACTERS_OPTION)
-        .desc(bundle.getString(Constants.EXCLUDES_AMBIGUOUS))
-        .build();
-    Option orderOpt =          Option.builder()        .hasArg(false)
-        .required(false)
-        .longOpt(Constants.EXCLUDES_ORDER_OPTION)
-        .desc(bundle.getString(Constants.EXCLUDES_ORDER))
-        .build();
-    Option symbolsOpt =         Option.builder("s").hasArg(true)
-        .required(false)
-        .optionalArg(true)
-        .numberOfArgs(1)
-        .longOpt(Constants.EXCLUDES_SYMBOLS_OPTION)
-        .desc(bundle.getString(Constants.EXCLUDES_SYMBOLS))
-        .type(String.class)
-        .build();
-    Option lengthOpt =         Option.builder("l").argName("value") // TODO set its arg name
-        .optionalArg(false) // mark the builder object as an optional option
-        .hasArg(true)
-        .numberOfArgs(1)
-        .longOpt(Constants.LENGTH_OPTION)
-        .desc(bundle.getString(Constants.SPECIFY_LENGTH))
-        .required()
-        .type(Number.class)
-        .build(); // returns an option
-    Option delimiterOpt =      Option.builder("d").argName("value") // set its arg name
-        .optionalArg(false) // mark the builder object as an optional option
-        .hasArg(true)
-        .numberOfArgs(1)
-        .longOpt(Constants.DELIMITER_OPTION)
-        .desc(bundle.getString(Constants.SPECIFY_DELIMITER))
-        .required(false)
-        .type(Character.class)
-        .build();
-    Option helpOpt =           Option.builder("?").longOpt(Constants.HELP_OPTION)
-        .required(false)
-        .hasArg(false)
-        .desc(bundle.getString(Constants.HELP_MSG))
-        .build();
-    Option modeOpt =           Option.builder("x").hasArg(false)
-        .required(false)
-        .longOpt(Constants.PASSWORD_MODE_OPTION)
-        .desc(bundle.getString(Constants.MODE_SWITCH))
-        .build();
+    Option repeatOpt = Option.builder("r").hasArg(false)
+                            .required(false)
+                            .longOpt(Constants.NO_REPEAT_OPTION)
+                            .desc(String.format(bundle.getString(Constants.EXCLUDES_REPEAT)))
+                            .build();
+    Option uppercaseOpt = Option.builder("u").hasArg(false)
+                                .required(false)
+                                .longOpt(Constants.NO_UPPER_OPTION)
+                                .desc(String.format(bundle.getString(Constants.EXCLUDES_UPPERCASE)))
+                                .build();
+    Option lowercaseOpt = Option.builder("w").hasArg(false)
+                                .required(false)
+                                .longOpt(Constants.NO_LOWER_OPTION)
+                                .desc(String.format(bundle.getString(Constants.EXCLUDES_LOWERCASE)))
+                                .build();
+    Option digitsOpt = Option.builder("g").hasArg(false)
+                            .required(false)
+                            .longOpt(Constants.NO_DIGITS_OPTION)
+                            .desc(String.format(bundle.getString(Constants.EXCLUDES_DIGITS)))
+                            .build();
+    Option ambiguousOpt = Option.builder("a").hasArg(false)
+                                .required(false)
+                                .longOpt(Constants.NO_AMBIGUOUS_CHARACTERS_OPTION)
+                                .desc(String.format(bundle.getString(Constants.EXCLUDES_AMBIGUOUS)))
+                                .build();
+    Option orderOpt = Option.builder().hasArg(false)
+                                      .required(false)
+                                      .longOpt(Constants.EXCLUDES_ORDER_OPTION)
+                                      .desc(String.format(bundle.getString(Constants.EXCLUDES_ORDER)))
+                                      .build();
+    Option symbolsOpt = Option.builder("s").hasArg(true)
+                                          .required(false)
+                                          .optionalArg(true)
+                                          .numberOfArgs(1)
+                                          .longOpt(Constants.EXCLUDES_SYMBOLS_OPTION)
+                                          .desc(String.format(bundle.getString(Constants.EXCLUDES_SYMBOLS)))
+                                          .type(String.class)
+                                          .build();
+    Option lengthOpt = Option.builder("l").argName("value") // TODO set its arg name
+                                            .optionalArg(false) // mark the builder object as an optional option
+                                            .hasArg(true)
+                                            .numberOfArgs(1)
+                                            .longOpt(Constants.LENGTH_OPTION)
+                                            .desc(String.format(bundle.getString(Constants.SPECIFY_LENGTH)))
+                                            .required(false)
+                                            .type(Number.class)
+                                            .build(); // returns an option
+    Option delimiterOpt = Option.builder("d").argName("value") // set its arg name
+                                            .optionalArg(false) // mark the builder object as an optional option
+                                            .hasArg(true)
+                                            .numberOfArgs(1)
+                                            .longOpt(Constants.DELIMITER_OPTION)
+                                            .desc(String.format(bundle.getString(Constants.SPECIFY_DELIMITER)))
+                                            .required(false)
+                                            .type(String.class)
+                                            .build();
+    Option helpOpt = Option.builder("?").longOpt(Constants.HELP_OPTION)
+                                        .required(false)
+                                        .hasArg(false)
+                                        .desc(String.format(bundle.getString(Constants.HELP_MSG)))
+                                        .build();
+    Option modeOpt = Option.builder("x").hasArg(false)
+                                      .required(false)
+                                      .longOpt(Constants.PASSWORD_MODE_OPTION)
+                                      .desc(String.format(bundle.getString(Constants.MODE_SWITCH)))
+                                      .build();
 
     org.apache.commons.cli.Options options = new org.apache.commons.cli.Options();
     options.addOption(repeatOpt);
@@ -201,6 +230,9 @@ public class Options {
     return options;
   }
 
+  /**
+   * Added new HelpRequestException to handle help option related exceptions
+   */
   public static class HelpRequestedException extends Exception {
 
     public HelpRequestedException() {

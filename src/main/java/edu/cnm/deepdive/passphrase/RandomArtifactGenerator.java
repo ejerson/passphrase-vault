@@ -12,7 +12,7 @@ public abstract class RandomArtifactGenerator {
   protected RandomArtifactGenerator() {
   }
 
-  public abstract void generate();
+  public abstract String generate();
 
   public int getLength() {
     return length;

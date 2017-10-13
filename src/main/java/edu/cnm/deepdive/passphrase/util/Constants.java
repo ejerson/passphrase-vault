@@ -10,13 +10,13 @@ public class Constants {
 
 
   // Definitions of the Exclusion string variables
-  public static final String EXCLUDES_REPEAT = "excludesRepeat";
-  public static final String EXCLUDES_UPPERCASE = "excludesUppercase";
-  public static final String EXCLUDES_LOWERCASE = "excludesLowercase";
-  public static final String EXCLUDES_DIGITS = "excludesDigits";
-  public static final String EXCLUDES_SYMBOLS = "excludesSymbols";
-  public static final String EXCLUDES_AMBIGUOUS = "excludesAmbiguous";
-  public static final String EXCLUDES_ORDER = "excludesOrder";
+  public static final String EXCLUDES_REPEAT = "repeatExcluded";
+  public static final String EXCLUDES_UPPERCASE = "uppercaseExcluded";
+  public static final String EXCLUDES_LOWERCASE = "lowercaseExcluded";
+  public static final String EXCLUDES_DIGITS = "digitsExcluded";
+  public static final String EXCLUDES_SYMBOLS = "symbolsExcluded";
+  public static final String EXCLUDES_AMBIGUOUS = "ambiguousExcluded";
+  public static final String EXCLUDES_ORDER = "orderExcluded";
 
 
   // Definitions of the Specifications string variables
@@ -42,21 +42,13 @@ public class Constants {
   public static final String ARGUMENT_ERROR = "argumentError";
   public static final String DELIMITER_ERROR = "delimiterErrorMessage";
 
-
-  // Definitions of the Warning Messages
-  public static final String LENGTH_WARNING = "lengthWarning";
-  public static final String MODE_WARNING = "modeWarning";
-  public static final String UNRECOGNIZED_OPTION = "unrecognizedOption";
-  public static final String MISSING_OPTION = "missingOption";
-
-
   // Definitions of the arguments
   public static final String EXCLUDES_SYMBOLS_ARGS = "excludesSymbolsArgs";
   public static final String SPECIFY_LENGTH_ARGS = "specifyLengthArgs";
   public static final String SPECIFY_DELEMITER_ARGS = "specifyDelimiterArgs";
 
 
-  // long option names
+  // long option names keys
   public static final String NO_REPEAT_OPTION = "no-repeat";
   public static final String NO_UPPER_OPTION = "no-upper";
   public static final String NO_LOWER_OPTION = "no-lower";
@@ -87,7 +79,22 @@ public class Constants {
   public static final String LOWERCASE = UPPERCASE.toLowerCase();
   public static final String DIGITS = "0123456789";
   public static final String SYMBOLS = "*!<>?/@#$%^&()-+_,.\\|{}[]~`:;\'\"";
-  public static final String AMBIGUOUS = "l, 1, o, 0";
+  public static final char[] AMBIGUOUS = {'l', '1', 'o', 'O'};
+  public static final int MAX_ORDER_LENGTH = 2;
+
+  // Definitions of the Warning Messages
+  public static final String LENGTH_WARNING = "lengthWarning";
+  public static final String MODE_WARNING = "modeWarning";
+  public static final String REPEAT_WARNING = "repeatWarning";
+  public static final String UNRECOGNIZED_OPTION = "unrecognizedOption";
+  public static final String MISSING_OPTION = "missingOption";
+  public static final String UPPERCASE_WARNING = "uppercaseWarning";
+  public static final String LOWERCASE_WARNING = "lowercaseWarning";
+  public static final String DIGIT_WARNING = "digitWarning";
+  public static final String AMBIGUOUS_WARNING = "ambiguousWarning";
+  public static final String ORDER_WARNING = "orderWarning";
+  public static final String SYMBOL_WARNING = "symbolWarning";
+  public static final String DELIMITER_WARNING = "delimiterWarning";
 }
 
 

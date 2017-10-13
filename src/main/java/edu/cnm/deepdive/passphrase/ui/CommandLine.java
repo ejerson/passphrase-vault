@@ -2,20 +2,21 @@ package edu.cnm.deepdive.passphrase.ui;
 
 import edu.cnm.deepdive.passphrase.Options;
 import edu.cnm.deepdive.passphrase.util.Constants;
+import edu.cnm.deepdive.passphrase.util.UsageStrings;
 import java.util.Map;
-
-//TODO - Write main method as a test rig for Options class.
+import java.util.ResourceBundle;
 
 public class CommandLine {
 
     public static void main(String[] args) {
-
+        ResourceBundle resourceBundle = UsageStrings.getBundle();
         try {
             Options options = new Options(args);
             Map<String, Object> map = options.map;
 
             for (Map.Entry<String, Object> entry : map.entrySet()) {
                 System.out.printf("%s = %s%n", entry.getKey(), entry.getValue());
+
             }
             boolean passwordMode = map.containsKey(Constants.PASSWORD_MODE_OPTION);
             if (passwordMode) {
@@ -23,34 +24,28 @@ public class CommandLine {
                     switch (key) {
                         // TODO - invoke setters on password generator
                         case Constants.EXCLUDES_REPEAT:
-                            System.out.println("User specified no repeat characters.");
+                            System.out.println(Constants.REPEAT_WARNING);
                             break;
                         case Constants.EXCLUDES_UPPERCASE:
-                            System.out.println("User specified no uppercase.");
+                            System.out.println(Constants.UPPERCASE_WARNING);
                             break;
                         case Constants.EXCLUDES_LOWERCASE:
-                            System.out.println("User specified no lowercase.");
+                            System.out.println(Constants.LOWERCASE_WARNING);
                             break;
                         case Constants.EXCLUDES_DIGITS:
-                            System.out.println("User specified no digits.");
+                            System.out.println(Constants.DIGIT_WARNING);
                             break;
                         case Constants.EXCLUDES_AMBIGUOUS:
-                            System.out.println("User specified no ambiguous characters.");
+                            System.out.println(Constants.AMBIGUOUS_WARNING);
                             break;
                         case Constants.EXCLUDES_ORDER:
-                            System.out.println("User specified no order characters.");
+                            System.out.println(Constants.ORDER_WARNING);
                             break;
                         case Constants.EXCLUDES_SYMBOLS:
-                            System.out.println("User specified no symbols.");
+                            System.out.println(Constants.SYMBOL_WARNING);
                             break;
                         case Constants.SPECIFY_LENGTH:
-                            System.out.println("User specified length.");
-                            break;
-                        case Constants.SPECIFY_DELIMITER:
-                            System.out.println("User specified delimiter.");
-                            break;
-                        case Constants.HELP_OPTION:
-                            System.out.println("User specified help.");
+                            System.out.println(Constants.LENGTH_WARNING);
                             break;
                     }
 
@@ -61,17 +56,18 @@ public class CommandLine {
                     switch (key) {
                         // TODO - invoke setters on password generator
                         case Constants.NO_REPEAT_OPTION:
-                            System.out.println("User specified no repeat words.");
-                            break;
-                        case Constants.EXCLUDES_ORDER:
-                            System.out.println("User specified no order words.");
+                            System.out.println(Constants.REPEAT_WARNING);
                             break;
                         case Constants.SPECIFY_LENGTH:
-                            System.out.println("User specified length.");
+                            System.out.println(Constants.LENGTH_WARNING);
                             break;
                         case Constants.SPECIFY_DELIMITER:
-                            System.out.println("User specified delimiter.");
+                            System.out.println(Constants.DELIMITER_WARNING);
                             break;
+                        case Constants.PASSWORD_MODE_OPTION:
+                            System.out.println(Constants.MODE_WARNING);
+                            break;
+
                     }
                 }
             }
