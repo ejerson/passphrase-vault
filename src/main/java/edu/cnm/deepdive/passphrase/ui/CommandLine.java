@@ -6,6 +6,9 @@ import edu.cnm.deepdive.passphrase.util.UsageStrings;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ *
+ */
 public class CommandLine {
 
     public static void main(String[] args) {
