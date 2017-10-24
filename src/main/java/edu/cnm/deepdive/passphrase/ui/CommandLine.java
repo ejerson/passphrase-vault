@@ -33,8 +33,9 @@ public class CommandLine {
                 for (String key : map.keySet()) {
                     switch (key) {
                         // TODO - invoke setters on password generator
-                        case Constants.EXCLUDES_REPEAT:
+                        case Constants.NO_REPEAT_OPTION:
                             System.out.println(Constants.REPEAT_WARNING);
+                            generator.setRepeatedAllowed(false);
                             break;
                         case Constants.EXCLUDES_UPPERCASE:
                             System.out.println(Constants.UPPERCASE_WARNING);
@@ -43,19 +44,27 @@ public class CommandLine {
                             System.out.println(Constants.LOWERCASE_WARNING);
                             break;
                         case Constants.EXCLUDES_DIGITS:
-                            System.out.println(Constants.DIGIT_WARNING);
+//                            System.out.println(Constants.DIGIT_WARNING);
+
                             break;
-                        case Constants.EXCLUDES_AMBIGUOUS:
-                            System.out.println(Constants.AMBIGUOUS_WARNING);
+                        case Constants.NO_AMBIGUOUS_CHARACTERS_OPTION:
+//                            System.out.println(Constants.AMBIGUOUS_WARNING);
+                            ((RandomPasswordGenerator) generator)
+                                .setAmbiguousExcluded(false);
                             break;
-                        case Constants.EXCLUDES_ORDER:
-                            System.out.println(Constants.ORDER_WARNING);
+                        case Constants.EXCLUDES_ORDER_OPTION:
+//                            System.out.println(Constants.ORDER_WARNING);
+                            ((RandomPasswordGenerator) generator)
+                                .setOrderExcluded(false);
                             break;
-                        case Constants.EXCLUDES_SYMBOLS:
-                            System.out.println(Constants.SYMBOL_WARNING);
+                        case Constants.EXCLUDES_SYMBOLS_OPTION:
+                            //System.out.println(Constants.SYMBOL_WARNING);
+                            ((RandomPasswordGenerator) generator)
+                                .setSymbolsExcluded(false);
                             break;
-                        case Constants.SPECIFY_LENGTH:
-                            System.out.println(Constants.LENGTH_WARNING);
+                        case Constants.LENGTH_OPTION:
+                            //System.out.println(Constants.LENGTH_WARNING);
+                            generator.setLength(((Number) map.get(Constants.LENGTH_OPTION)).intValue());
                             break;
                     }
 
@@ -65,7 +74,6 @@ public class CommandLine {
                 generator = new RandomPassphraseGenerator();
                 for (String key : map.keySet()) {
                     switch (key) {
-                        // TODO - invoke setters on passphrase generator
                         case Constants.NO_REPEAT_OPTION:
                             generator.setRepeatedAllowed(false);
                             break;
@@ -76,6 +84,7 @@ public class CommandLine {
                             ((RandomPassphraseGenerator) generator)
                                 .setDelimiter(((String) map.get(Constants.DELIMITER_OPTION)).charAt(0));
                             break;
+
                     }
                 }
             }

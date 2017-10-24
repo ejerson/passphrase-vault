@@ -83,9 +83,9 @@ public class Constants {
   /**Long option for no Ambiguous Characters Option*/
   public static final String NO_AMBIGUOUS_CHARACTERS_OPTION = "no-ambiguous-characters";
   /**Long option for Exclude Order Option*/
-  public static final String EXCLUDES_ORDER_OPTION = "exclude-order";
+  public static final String EXCLUDES_ORDER_OPTION = "orderExcluded";
   /**Long option for Exclude Symbols Option*/
-  public static final String EXCLUDES_SYMBOLS_OPTION = "exclude-symbols";
+  public static final String EXCLUDES_SYMBOLS_OPTION = "symbolsExcluded";
   /**Long option for Length Option*/
   public static final String LENGTH_OPTION = "length";
   /**Long option for Delimiter Option*/
