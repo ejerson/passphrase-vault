@@ -37,8 +37,10 @@ public class CommandLine {
                             System.out.println(Constants.REPEAT_WARNING);
                             generator.setRepeatedAllowed(false);
                             break;
-                        case Constants.EXCLUDES_UPPERCASE:
+                        case Constants.NO_UPPER_OPTION:
                             System.out.println(Constants.UPPERCASE_WARNING);
+                          ((RandomPasswordGenerator) generator)
+                              .setUppercaseExcluded(true);
                             break;
                         case Constants.NO_LOWER_OPTION:
                             System.out.println(Constants.LOWERCASE_WARNING);
@@ -46,26 +48,24 @@ public class CommandLine {
                               .setLowercaseExcluded(true);
                             break;
                         case Constants.EXCLUDES_DIGITS:
-//                            System.out.println(Constants.DIGIT_WARNING);
-
+                            System.out.println(Constants.DIGIT_WARNING);
                             break;
-                        case Constants.NO_AMBIGUOUS_CHARACTERS_OPTION:
-//                            System.out.println(Constants.AMBIGUOUS_WARNING);
+                        case Constants.NO_AMBIGUOUS_CHARACTERS_OPTION: System.out.println(Constants.AMBIGUOUS_WARNING);
                             ((RandomPasswordGenerator) generator)
                                 .setAmbiguousExcluded(false);
                             break;
                         case Constants.EXCLUDES_ORDER_OPTION:
-//                            System.out.println(Constants.ORDER_WARNING);
+                            System.out.println(Constants.ORDER_WARNING);
                             ((RandomPasswordGenerator) generator)
                                 .setOrderExcluded(false);
                             break;
                         case Constants.EXCLUDES_SYMBOLS_OPTION:
-                            //System.out.println(Constants.SYMBOL_WARNING);
+                            System.out.println(Constants.SYMBOL_WARNING);
                             ((RandomPasswordGenerator) generator)
                                 .setSymbolsExcluded(false);
                             break;
                         case Constants.LENGTH_OPTION:
-                            //System.out.println(Constants.LENGTH_WARNING);
+                            System.out.println(Constants.LENGTH_WARNING);
                             generator.setLength(((Number) map.get(Constants.LENGTH_OPTION)).intValue());
                             break;
                     }
