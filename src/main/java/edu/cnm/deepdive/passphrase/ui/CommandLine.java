@@ -21,10 +21,6 @@ public class CommandLine {
             Options options = new Options(args);
             Map<String, Object> map = options.map;
 
-            for (Map.Entry<String, Object> entry : map.entrySet()) {
-                System.out.printf("%s = %s%n", entry.getKey(), entry.getValue());
-
-            }
             boolean passwordMode = map.containsKey(Constants.PASSWORD_MODE_OPTION);
             RandomArtifactGenerator generator;
 
@@ -32,30 +28,35 @@ public class CommandLine {
                 generator = new RandomPasswordGenerator();
                 for (String key : map.keySet()) {
                     switch (key) {
-                        // TODO - invoke setters on password generator
-                        case Constants.EXCLUDES_REPEAT:
-                            System.out.println(Constants.REPEAT_WARNING);
+                        case Constants.NO_REPEAT_OPTION:
+                            generator.setRepeatedAllowed(false);
                             break;
-                        case Constants.EXCLUDES_UPPERCASE:
-                            System.out.println(Constants.UPPERCASE_WARNING);
+                        case Constants.NO_UPPER_OPTION:
+                          ((RandomPasswordGenerator) generator)
+                              .setUppercaseExcluded(true);
                             break;
-                        case Constants.EXCLUDES_LOWERCASE:
-                            System.out.println(Constants.LOWERCASE_WARNING);
+                        case Constants.NO_LOWER_OPTION:
+                          ((RandomPasswordGenerator) generator)
+                              .setLowercaseExcluded(true);
                             break;
-                        case Constants.EXCLUDES_DIGITS:
-                            System.out.println(Constants.DIGIT_WARNING);
+                        case Constants.NO_DIGITS_OPTION:
+                            ((RandomPasswordGenerator) generator)
+                                .setDigitsExcluded(true);
                             break;
-                        case Constants.EXCLUDES_AMBIGUOUS:
-                            System.out.println(Constants.AMBIGUOUS_WARNING);
+                        case Constants.NO_AMBIGUOUS_CHARACTERS_OPTION:
+                            ((RandomPasswordGenerator) generator)
+                                .setAmbiguousExcluded(true);
                             break;
-                        case Constants.EXCLUDES_ORDER:
-                            System.out.println(Constants.ORDER_WARNING);
+                        case Constants.EXCLUDES_ORDER_OPTION:
+                            ((RandomPasswordGenerator) generator)
+                                .setOrderExcluded(true);
                             break;
-                        case Constants.EXCLUDES_SYMBOLS:
-                            System.out.println(Constants.SYMBOL_WARNING);
+                        case Constants.EXCLUDES_SYMBOLS_OPTION:
+                            ((RandomPasswordGenerator) generator)
+                                .setSymbolsExcluded(true);
                             break;
-                        case Constants.SPECIFY_LENGTH:
-                            System.out.println(Constants.LENGTH_WARNING);
+                        case Constants.LENGTH_OPTION:
+                            generator.setLength(((Number) map.get(Constants.LENGTH_OPTION)).intValue());
                             break;
                     }
 
@@ -65,7 +66,6 @@ public class CommandLine {
                 generator = new RandomPassphraseGenerator();
                 for (String key : map.keySet()) {
                     switch (key) {
-                        // TODO - invoke setters on passphrase generator
                         case Constants.NO_REPEAT_OPTION:
                             generator.setRepeatedAllowed(false);
                             break;
@@ -76,6 +76,7 @@ public class CommandLine {
                             ((RandomPassphraseGenerator) generator)
                                 .setDelimiter(((String) map.get(Constants.DELIMITER_OPTION)).charAt(0));
                             break;
+
                     }
                 }
             }

@@ -23,7 +23,6 @@ public class RandomPasswordGenerator extends RandomArtifactGenerator {
   /** Accesses and stores user's Ambiguous preference*/
   private boolean ambiguousExcluded = Constants.DEFAULT_EXCLUDES_AMBIGUOUS;
 
-
   /** Constructor for the Password Length*/
   public RandomPasswordGenerator() {
     setLength(Constants.DEFAULT_PASSWORD_LENGTH);
@@ -44,6 +43,7 @@ public class RandomPasswordGenerator extends RandomArtifactGenerator {
     if (!uppercaseExcluded) {
       pool.append(Constants.UPPERCASE.replaceAll(ambiguousRegex, ""));
     }
+
     if (!lowercaseExcluded) {
       pool.append(Constants.LOWERCASE.replaceAll(ambiguousRegex, ""));
     }
@@ -64,7 +64,7 @@ public class RandomPasswordGenerator extends RandomArtifactGenerator {
         } else {
           boolean searchAscending = true;
           boolean searchDescending = true;
-          for (int i = 0; i <= Constants.MAX_ORDER_LENGTH; i++) {
+          for (int i = 1; i <= Constants.MAX_ORDER_LENGTH; i++) {
             if (searchAscending && characters.get(characters.size() - i) == (char) (c - i)) {
               searchDescending = false;
             } else if (searchDescending && characters.get(characters.size() - i) == (char) (c
@@ -85,6 +85,7 @@ public class RandomPasswordGenerator extends RandomArtifactGenerator {
     }
     return password.toString();
   }
+
 
   /**
    * Provides access to Order preference
