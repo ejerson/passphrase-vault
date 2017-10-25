@@ -37,10 +37,8 @@ public class CommandLine {
                             System.out.println(Constants.REPEAT_WARNING);
                             generator.setRepeatedAllowed(false);
                             break;
-                        case Constants.NO_UPPER_OPTION:
+                        case Constants.EXCLUDES_UPPERCASE:
                             System.out.println(Constants.UPPERCASE_WARNING);
-                          ((RandomPasswordGenerator) generator)
-                              .setUppercaseExcluded(true);
                             break;
                         case Constants.NO_LOWER_OPTION:
                             System.out.println(Constants.LOWERCASE_WARNING);
