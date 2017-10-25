@@ -37,11 +37,15 @@ public class CommandLine {
                             System.out.println(Constants.REPEAT_WARNING);
                             generator.setRepeatedAllowed(false);
                             break;
-                        case Constants.EXCLUDES_UPPERCASE:
+                        case Constants.NO_UPPER_OPTION:
                             System.out.println(Constants.UPPERCASE_WARNING);
+                          ((RandomPasswordGenerator) generator)
+                              .setUppercaseExcluded(true);
                             break;
-                        case Constants.EXCLUDES_LOWERCASE:
+                        case Constants.NO_LOWER_OPTION:
                             System.out.println(Constants.LOWERCASE_WARNING);
+                          ((RandomPasswordGenerator) generator)
+                              .setLowercaseExcluded(true);
                             break;
                         case Constants.EXCLUDES_DIGITS:
 //                            System.out.println(Constants.DIGIT_WARNING);
