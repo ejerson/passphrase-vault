@@ -21,10 +21,6 @@ public class CommandLine {
             Options options = new Options(args);
             Map<String, Object> map = options.map;
 
-            for (Map.Entry<String, Object> entry : map.entrySet()) {
-                System.out.printf("%s = %s%n", entry.getKey(), entry.getValue());
-
-            }
             boolean passwordMode = map.containsKey(Constants.PASSWORD_MODE_OPTION);
             RandomArtifactGenerator generator;
 
@@ -32,40 +28,34 @@ public class CommandLine {
                 generator = new RandomPasswordGenerator();
                 for (String key : map.keySet()) {
                     switch (key) {
-                        // TODO - invoke setters on password generator
                         case Constants.NO_REPEAT_OPTION:
-                            System.out.println(Constants.REPEAT_WARNING);
                             generator.setRepeatedAllowed(false);
                             break;
                         case Constants.NO_UPPER_OPTION:
-                            System.out.println(Constants.UPPERCASE_WARNING);
                           ((RandomPasswordGenerator) generator)
                               .setUppercaseExcluded(true);
                             break;
                         case Constants.NO_LOWER_OPTION:
-                            System.out.println(Constants.LOWERCASE_WARNING);
                           ((RandomPasswordGenerator) generator)
                               .setLowercaseExcluded(true);
                             break;
-                        case Constants.EXCLUDES_DIGITS:
-                            System.out.println(Constants.DIGIT_WARNING);
-                            break;
-                        case Constants.NO_AMBIGUOUS_CHARACTERS_OPTION: System.out.println(Constants.AMBIGUOUS_WARNING);
+                        case Constants.NO_DIGITS_OPTION:
                             ((RandomPasswordGenerator) generator)
-                                .setAmbiguousExcluded(false);
+                                .setDigitsExcluded(true);
+                            break;
+                        case Constants.NO_AMBIGUOUS_CHARACTERS_OPTION:
+                            ((RandomPasswordGenerator) generator)
+                                .setAmbiguousExcluded(true);
                             break;
                         case Constants.EXCLUDES_ORDER_OPTION:
-                            System.out.println(Constants.ORDER_WARNING);
                             ((RandomPasswordGenerator) generator)
-                                .setOrderExcluded(false);
+                                .setOrderExcluded(true);
                             break;
                         case Constants.EXCLUDES_SYMBOLS_OPTION:
-                            System.out.println(Constants.SYMBOL_WARNING);
                             ((RandomPasswordGenerator) generator)
-                                .setSymbolsExcluded(false);
+                                .setSymbolsExcluded(true);
                             break;
                         case Constants.LENGTH_OPTION:
-                            System.out.println(Constants.LENGTH_WARNING);
                             generator.setLength(((Number) map.get(Constants.LENGTH_OPTION)).intValue());
                             break;
                     }

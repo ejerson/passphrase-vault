@@ -64,7 +64,7 @@ public class RandomPasswordGenerator extends RandomArtifactGenerator {
         } else {
           boolean searchAscending = true;
           boolean searchDescending = true;
-          for (int i = 0; i <= Constants.MAX_ORDER_LENGTH; i++) {
+          for (int i = 1; i <= Constants.MAX_ORDER_LENGTH; i++) {
             if (searchAscending && characters.get(characters.size() - i) == (char) (c - i)) {
               searchDescending = false;
             } else if (searchDescending && characters.get(characters.size() - i) == (char) (c
